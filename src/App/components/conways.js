@@ -28,7 +28,7 @@ const Conways = () => {
 
   return (
     <Container>
-      <Board grid={grid}/>
+      <Board grid={grid} />
     </Container>
   );
 };
