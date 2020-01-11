@@ -18,7 +18,7 @@ const GridContainer = styled.div`
   grid-column-gap: 0px;
 `;
 
-const Grid = ({ grid, mutateCell }) => {
+const Grid = ({ grid, flipCell }) => {
   return (
     <GridContainer>
       {grid.map((row, rowIndex) => {
@@ -26,7 +26,7 @@ const Grid = ({ grid, mutateCell }) => {
           <Cell
             key={`${rowIndex}-${columnIndex}`}
             isAlive={grid[rowIndex][columnIndex] ? true : false}
-            onClick={() => mutateCell(rowIndex, columnIndex)}
+            onClick={() => flipCell(rowIndex, columnIndex)}
           ></Cell>
         ));
       })}
