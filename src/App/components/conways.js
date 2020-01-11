@@ -1,34 +1,74 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
-import Board from "./grid";
+import Grid from "./grid";
+
+import produce from "immer";
 
 const Container = styled.div`
-  display: flex;
-  flex-direction: "column";
-  align-content: center;
-  justify-content: center;
+  background-color: #f5f5f5;
   height: 100vh;
-  width: 100%;
+  width: 100vw;
 `;
 
-const BOARD_HEIGHT = 100;
-const BOARD_WIDTH = 100;
+const Row = styled.div`
+  padding-top: ${props => (props.pt ? `${props.pt}px` : undefined)};
+  padding-bottom: ${props => (props.pb ? `${props.pb}px` : undefined)};
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+`;
 
-const generateGrid = () => {
-  const newGrid = Array.from({ length: BOARD_HEIGHT }, () =>
-    Array.from({ length: BOARD_WIDTH }, () => 0)
+const Button = styled.button``;
+
+const BOARD_HEIGHT = 50;
+const BOARD_WIDTH = 50;
+
+const LIFE_RATIO = 0.25;
+
+const generateEmptyGrid = () =>
+  Array.from({ length: BOARD_WIDTH }, () =>
+    Array.from({ length: BOARD_HEIGHT }, () => 0)
   );
 
-  return newGrid;
-};
+const generateRandomGrid = () =>
+  Array.from({ length: BOARD_WIDTH }, () =>
+    Array.from({ length: BOARD_HEIGHT }, () =>
+      Math.random() < LIFE_RATIO ? 1 : 0
+    )
+  );
 
 const Conways = () => {
-  const [grid, setGrid] = useState(generateGrid());
+  const [grid, setGrid] = useState(generateEmptyGrid());
+
+  const clearGrid = () => {
+    setGrid(generateEmptyGrid());
+  };
+
+  const randomiseGrid = () => {
+    setGrid(generateRandomGrid());
+  };
+
+  const mutateCell = (rowIndex, colIndex) => {
+    setGrid(oldGrid => {
+      return produce(oldGrid, gridCopy => {
+        gridCopy[rowIndex][colIndex] = gridCopy[rowIndex][colIndex] ? 0 : 1;
+      });
+    });
+  };
 
   return (
     <Container>
-      <Board grid={grid} />
+      <Row pt={50} pb={50}>
+        <Button>Start</Button>
+        <Button>Stop</Button>
+        <Button onClick={randomiseGrid}>Randomise</Button>
+        <Button onClick={clearGrid}>Clear</Button>
+      </Row>
+      <Row>
+        <Grid grid={grid} mutateCell={mutateCell} />
+      </Row>
     </Container>
   );
 };

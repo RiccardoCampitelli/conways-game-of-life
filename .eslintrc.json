@@ -18,6 +18,11 @@
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
+    "no-useless-computed-key": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "warn",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"
   }
