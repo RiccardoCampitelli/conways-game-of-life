@@ -20,7 +20,18 @@ const Row = styled.div`
   justify-content: center;
 `;
 
-const Button = styled.button``;
+const Button = styled.button`
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 3px;
+  height: 25px;
+  border: 1px solid pink;
+  background-color: pink;
+  cursor: pointer;
+  :focus {
+    outline: 0;
+  }
+`;
 
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
