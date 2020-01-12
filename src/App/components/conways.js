@@ -23,6 +23,7 @@ const Row = styled.div`
   flex-direction: row;
   align-content: center;
   justify-content: center;
+
 `;
 
 const Button = styled.button`
@@ -33,18 +34,19 @@ const Button = styled.button`
   font-weight: bold;
   font-size: 15px;
   height: 40px;
-  border: 1px solid pink;
-  background-color: ${props => (props.color ? props.color : "pink")};
+  border: 1px solid ${props => (props.color ? props.color : "#c66")};
+  color: #f5f5f5;
+  background-color: ${props => (props.color ? props.color : "#c66")};
   cursor: pointer;
 
-  transition: transform 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   :focus {
     outline: 0;
   }
 
   :hover {
-    transform: translateY(-2px);
+    transform: scale(1.05)
   }
 
   -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
@@ -78,7 +80,7 @@ const Slider = styled.input`
     width: 15px;
     height: 15px;
     border-radius: 5px;
-    background: pink;
+    background: #c66;
   }
 `;
 
@@ -88,6 +90,26 @@ const PlusIcon = styled(FaPlus)`
 
 const MinusIcon = styled(FaMinus)`
   cursor: pointer;
+`;
+
+const Header = styled.h1`
+  margin: 0;
+  /* text-align: center; */
+
+  background-color: #c66;
+  border-radius: 15px;
+  width: 80%;
+  height: 100px;
+  line-height: 80px;
+  font-size: 60px;
+  text-align: center;
+  position: relative;
+  margin: 100px auto;
+  /* font-family: 'Patua One', cursive; */
+  font-family: 'Pacifico', cursive;
+  color: #f5f5f5;
+  z-index: 5;
+
 `;
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
@@ -203,9 +225,13 @@ const Conways = () => {
 
   return (
     <Container>
+      <Row>
+
+      <Header>Conways game of life</Header>
+      </Row>
       <GameDescription />
       <Row pt={20} pb={20}>
-        <Button color={running ? "papayawhip" : "pink"} onClick={toggleRunning}>
+        <Button color={running ? "#eb7575" : "#c66"} onClick={toggleRunning}>
           {running ? "Stop" : "Start"}
         </Button>
         <Button onClick={randomiseGrid}>Randomise</Button>
