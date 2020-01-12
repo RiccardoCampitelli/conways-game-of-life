@@ -19,6 +19,10 @@ const GridContainer = styled.div`
   grid-template-rows: repeat(50, auto);
   grid-row-gap: 0px;
   grid-column-gap: 0px;
+
+  -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
+  -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
+  box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
 `;
 
 const Grid = ({ grid, flipCell }) => {
@@ -30,7 +34,7 @@ const Grid = ({ grid, flipCell }) => {
             key={`${rowIndex}-${columnIndex}`}
             isAlive={grid[rowIndex][columnIndex] ? true : false}
             onClick={() => flipCell(rowIndex, columnIndex)}
-        />
+          />
         ));
       })}
     </GridContainer>

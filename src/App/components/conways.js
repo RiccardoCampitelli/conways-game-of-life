@@ -23,7 +23,6 @@ const Row = styled.div`
   flex-direction: row;
   align-content: center;
   justify-content: center;
-
 `;
 
 const Button = styled.button`
@@ -46,7 +45,7 @@ const Button = styled.button`
   }
 
   :hover {
-    transform: scale(1.05)
+    transform: scale(1.05);
   }
 
   -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
@@ -94,7 +93,6 @@ const MinusIcon = styled(FaMinus)`
 
 const Header = styled.h1`
   margin: 0;
-  /* text-align: center; */
 
   background-color: #c66;
   border-radius: 15px;
@@ -104,12 +102,11 @@ const Header = styled.h1`
   font-size: 60px;
   text-align: center;
   position: relative;
-  margin: 100px auto;
-  /* font-family: 'Patua One', cursive; */
-  font-family: 'Pacifico', cursive;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  font-family: "Pacifico", cursive;
   color: #f5f5f5;
   z-index: 5;
-
 `;
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
@@ -170,6 +167,7 @@ const Conways = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
   const [tickSpeed, setTickSpeed] = useState(TICK_SPEED);
   const [running, setRunning] = useState(false);
+  const [generationCount, setGenerationCount] = useState(0);
 
   const tick = () => {
     setGrid(oldGrid => {
@@ -193,9 +191,12 @@ const Conways = () => {
 
       return newGrid;
     });
+    setGenerationCount(count => count + 1);
   };
 
-  useInterval(tick, running ? tickSpeed : null);
+  const speed = MAX_TICK_SPEED - tickSpeed;
+
+  useInterval(tick, running ? speed : null);
 
   const toggleRunning = () => {
     setRunning(running => !running);
@@ -204,10 +205,12 @@ const Conways = () => {
   const clearGrid = () => {
     setRunning(false);
     setGrid(generateEmptyGrid());
+    setGenerationCount(0);
   };
 
   const randomiseGrid = () => {
     setGrid(generateRandomGrid());
+    setGenerationCount(0);
   };
 
   const handleSpeedChange = event => {
@@ -226,8 +229,7 @@ const Conways = () => {
   return (
     <Container>
       <Row>
-
-      <Header>Conways game of life</Header>
+        <Header>Conways game of life</Header>
       </Row>
       <GameDescription />
       <Row pt={20} pb={20}>
@@ -248,6 +250,9 @@ const Conways = () => {
           onChange={handleSpeedChange}
         />
         <PlusIcon />
+      </Row>
+      <Row>
+        Generation #{generationCount}
       </Row>
       <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />
