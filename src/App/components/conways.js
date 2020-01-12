@@ -8,7 +8,7 @@ import useInterval from "../hooks/useInterval";
 
 const Container = styled.div`
   background-color: #f5f5f5;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
 `;
 
@@ -76,7 +76,6 @@ const countNeighbors = (grid, rowIndex, colIndex) => {
 
   options.forEach(([x, y]) => {
     const coordinatesToCheck = [rowIndex + x, colIndex + y];
-    // console.log(areValidCoordinates(coordinatesToCheck, BOARD_WIDTH -1 ), coordinatesToCheck)
     if (areValidCoordinates(coordinatesToCheck, BOARD_WIDTH - 1)) {
       const [xToCheck, yToCheck] = coordinatesToCheck;
 
@@ -103,7 +102,7 @@ const Conways = () => {
 
             if (grid[rowIndex][colIndex] === 1) {
               const shouldLive = neighborCount === 2 || neighborCount === 3;
-              
+
               if (!shouldLive) gridClone[rowIndex][colIndex] = 0;
             } else {
               const shouldLive = neighborCount === 3;
@@ -142,12 +141,22 @@ const Conways = () => {
 
   return (
     <Container>
-      <Row pt={50} pb={50}>
+
+      <Row pt={20}>
+        lots of text
+        lots of text
+        lots of text
+        lots of text
+        lots of text
+        lots of text
+      </Row>
+
+      <Row pt={20} pb={20}>
         <Button onClick={toggleRunning}>{running ? "Stop" : "Start"}</Button>
         <Button onClick={randomiseGrid}>Randomise</Button>
         <Button onClick={clearGrid}>Clear</Button>
       </Row>
-      <Row>
+      <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />
       </Row>
     </Container>
