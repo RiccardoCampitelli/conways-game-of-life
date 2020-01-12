@@ -27,11 +27,14 @@ const Button = styled.button`
   border-radius: 3px;
   height: 25px;
   border: 1px solid pink;
-  background-color: pink;
+  background-color: ${props => (props.color ? props.color : "pink")};
   cursor: pointer;
   :focus {
     outline: 0;
   }
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
 `;
 
 const BOARD_HEIGHT = 50;
@@ -89,7 +92,7 @@ const countNeighbors = (grid, rowIndex, colIndex) => {
 };
 
 const Conways = () => {
-  const [grid, setGrid] = useState(generateEmptyGrid());
+  const [grid, setGrid] = useState(generateRandomGrid());
 
   const [running, setRunning] = useState(false);
 
@@ -124,6 +127,7 @@ const Conways = () => {
   };
 
   const clearGrid = () => {
+    setRunning(false);
     setGrid(generateEmptyGrid());
   };
 
@@ -141,18 +145,30 @@ const Conways = () => {
 
   return (
     <Container>
+      <Row pt={20}>
+        The Game of Life, also known simply as Life, is a cellular automaton
+        devised by the British mathematician John Horton Conway in 1970.
+      </Row>
 
       <Row pt={20}>
-        lots of text
-        lots of text
-        lots of text
-        lots of text
-        lots of text
-        lots of text
+        These rules, which compare the behavior of the automaton to real life,
+        can be condensed into the following:
+      </Row>
+      <Row pt={20}>
+        <ol>
+          <li>any live cell with two or three neighbors survives.</li>
+          <li>Any dead cell with three live neighbors becomes a live cell.</li>
+          <li>
+            All other live cells die in the next generation. Similarly, all
+            other dead cells stay dead.
+          </li>
+        </ol>
       </Row>
 
       <Row pt={20} pb={20}>
-        <Button onClick={toggleRunning}>{running ? "Stop" : "Start"}</Button>
+        <Button color={running ? "papayawhip" : "pink"} onClick={toggleRunning}>
+          {running ? "Stop" : "Start"}
+        </Button>
         <Button onClick={randomiseGrid}>Randomise</Button>
         <Button onClick={clearGrid}>Clear</Button>
       </Row>
