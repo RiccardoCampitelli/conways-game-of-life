@@ -37,12 +37,40 @@ const Button = styled.button`
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
 `;
 
+const Slider = styled.input`
+  -webkit-appearance: none;
+  appearance: none;
+  width: 200px;
+  height: 5px;
+  border-radius: 2px;
+  background: #5c5c5c;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 5px;
+    background: pink;
+    cursor: pointer;
+  }
+`;
+
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
 
 const LIFE_RATIO = 0.25;
 
-const TICK_SPEED = 100;
+const TICK_SPEED = 250;
+const MAX_TICK_SPEED = 500;
 
 const generateEmptyGrid = () =>
   Array.from({ length: BOARD_WIDTH }, () =>
@@ -93,7 +121,7 @@ const countNeighbors = (grid, rowIndex, colIndex) => {
 
 const Conways = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
-
+  const [tickSpeed, setTickSpeed] = useState(TICK_SPEED);
   const [running, setRunning] = useState(false);
 
   const tick = () => {
@@ -120,7 +148,7 @@ const Conways = () => {
     });
   };
 
-  useInterval(tick, running ? TICK_SPEED : null);
+  useInterval(tick, running ? tickSpeed : null);
 
   const toggleRunning = () => {
     setRunning(running => !running);
@@ -133,6 +161,11 @@ const Conways = () => {
 
   const randomiseGrid = () => {
     setGrid(generateRandomGrid());
+  };
+
+  const handleSpeedChange = event => {
+    event.persist();
+    setTickSpeed(event.target.value);
   };
 
   const flipCell = (rowIndex, colIndex) => {
@@ -171,6 +204,22 @@ const Conways = () => {
         </Button>
         <Button onClick={randomiseGrid}>Randomise</Button>
         <Button onClick={clearGrid}>Clear</Button>
+      </Row>
+      <Row>Speed</Row>
+      <Row pt={20} pb={20}>
+        <span>
+          min
+        </span>
+        <Slider
+          value={tickSpeed}
+          type="range"
+          min="1"
+          max={MAX_TICK_SPEED}
+          onChange={handleSpeedChange}
+        />
+        <span>
+          max
+        </span>
       </Row>
       <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />
