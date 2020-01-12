@@ -27,14 +27,25 @@ const Row = styled.div`
 const Button = styled.button`
   margin-left: 10px;
   margin-right: 10px;
-  border-radius: 3px;
-  height: 25px;
+  border-radius: 15px;
+  padding: 10px 10px 10px 10px;
+  font-weight: bold;
+  font-size: 15px;
+  height:40px;
   border: 1px solid pink;
   background-color: ${props => (props.color ? props.color : "pink")};
   cursor: pointer;
+
+  transition: transform 0.3s ease-in-out;
+
   :focus {
     outline: 0;
   }
+
+  :hover {
+    transform: translateY(-2px)
+  }
+
   -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
