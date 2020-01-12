@@ -163,6 +163,8 @@ const countNeighbors = (grid, rowIndex, colIndex) => {
   return neighborCount;
 };
 
+
+//TODO: try https://github.com/react-component/slider for slider
 const Conways = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
   const [tickSpeed, setTickSpeed] = useState(TICK_SPEED);
