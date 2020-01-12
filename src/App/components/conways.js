@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-
 import styled from "styled-components";
 
 import Grid from "./grid";
@@ -8,6 +7,8 @@ import GameDescription from "./gameDescription";
 
 import produce from "immer";
 import useInterval from "../hooks/useInterval";
+
+import { FaPlus, FaMinus } from "react-icons/fa";
 
 const Container = styled.div`
   background-color: #f5f5f5;
@@ -31,7 +32,7 @@ const Button = styled.button`
   padding: 10px 10px 10px 10px;
   font-weight: bold;
   font-size: 15px;
-  height:40px;
+  height: 40px;
   border: 1px solid pink;
   background-color: ${props => (props.color ? props.color : "pink")};
   cursor: pointer;
@@ -43,7 +44,7 @@ const Button = styled.button`
   }
 
   :hover {
-    transform: translateY(-2px)
+    transform: translateY(-2px);
   }
 
   -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
@@ -56,12 +57,16 @@ const Slider = styled.input`
   appearance: none;
   width: 200px;
   height: 5px;
+  margin-top: 5px;
   border-radius: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
   background: #5c5c5c;
   outline: none;
   opacity: 0.7;
   -webkit-transition: 0.2s;
   transition: opacity 0.2s;
+  cursor: pointer;
 
   -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
   -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
@@ -74,10 +79,16 @@ const Slider = styled.input`
     height: 15px;
     border-radius: 5px;
     background: pink;
-    cursor: pointer;
   }
 `;
 
+const PlusIcon = styled(FaPlus)`
+  cursor: pointer;
+`;
+
+const MinusIcon = styled(FaMinus)`
+  cursor: pointer;
+`;
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
 
@@ -202,9 +213,7 @@ const Conways = () => {
       </Row>
       <Row>Speed</Row>
       <Row pt={20} pb={20}>
-        <span>
-          min
-        </span>
+        <MinusIcon />
         <Slider
           value={tickSpeed}
           type="range"
@@ -212,9 +221,7 @@ const Conways = () => {
           max={MAX_TICK_SPEED}
           onChange={handleSpeedChange}
         />
-        <span>
-          max
-        </span>
+        <PlusIcon />
       </Row>
       <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />
