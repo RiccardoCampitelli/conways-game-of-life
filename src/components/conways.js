@@ -13,8 +13,10 @@ import Controls from "#root/components/controls";
 import {
   Slider,
   Section,
-  Button
+  Button,
+  Row
 } from "#root/components/common/styledComponents";
+import useDimensions from "../hooks/useDimensions";
 
 const Container = styled.div`
   background-color: #f5f5f5;
@@ -22,14 +24,14 @@ const Container = styled.div`
   width: 100vw;
 `;
 
-const Row = styled.div`
-  padding-top: ${props => (props.pt ? `${props.pt}px` : undefined)};
-  padding-bottom: ${props => (props.pb ? `${props.pb}px` : undefined)};
-  display: flex;
-  flex-direction: row;
-  align-content: center;
-  justify-content: center;
-`;
+// const Row = styled.div`
+//   padding-top: ${props => (props.pt ? `${props.pt}px` : undefined)};
+//   padding-bottom: ${props => (props.pb ? `${props.pb}px` : undefined)};
+//   display: flex;
+//   flex-direction: row;
+//   align-content: center;
+//   justify-content: center;
+// `;
 
 const PlusIcon = styled(FaPlus)`
   cursor: pointer;
@@ -60,6 +62,18 @@ const Header = styled.h1`
 const SliderWrapper = styled.div`
   margin-top: auto;
   margin-bottom: auto;
+`;
+
+const SliderLabel = styled.div`
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 15px;
+  padding: 10px 10px 10px 10px;
+  font-weight: bold;
+  font-size: 15px;
+  height: 20px;
+  background-color: #c66;
+  color: #f5f5f5;
 `;
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
@@ -125,13 +139,17 @@ const Conways = () => {
   const [running, setRunning] = useState(false);
   const [generationCount, setGenerationCount] = useState(0);
 
+  const [ref, { width }] = useDimensions();
+
+  const isSmallScreen = Math.floor(width) < 750;
+
   const tick = useCallback(() => {
     setGrid(oldGrid => {
       const newGrid = produce(oldGrid, gridClone => {
         gridClone.forEach((row, rowIndex) =>
           row.forEach((_, colIndex) => {
             const neighborCount = countNeighbors(oldGrid, rowIndex, colIndex);
-           
+
             if (gridClone[rowIndex][colIndex] === 1) {
               const shouldLive = neighborCount === 2 || neighborCount === 3;
 
@@ -181,21 +199,22 @@ const Conways = () => {
       });
     });
   };
-
+  console.log(isSmallScreen);
   return (
-    <Container>
+    <Container ref={ref}>
       <Row>
         <Header>Conways game of life</Header>
       </Row>
       <GameDescription />
-      <Row pt={15} pb={15}>
-        <Section mr="100px">
+      ``
+      <Row pt={15} pb={15} isSmallScreen={isSmallScreen}>
+        <Section>
           <Button onClick={toggleRunning}>{running ? "Stop" : "Start"}</Button>
           <Button onClick={randomiseGrid}>Randomise</Button>
           <Button onClick={clearGrid}>Clear</Button>
         </Section>
-        <SliderWrapper>
-          Speed ({tickSpeed})ms
+        <Section>
+          <SliderLabel>Speed ({tickSpeed})ms</SliderLabel>
           <Slider
             value={tickSpeed}
             type="range"
@@ -203,13 +222,8 @@ const Conways = () => {
             max={MAX_TICK_SPEED}
             onChange={handleSpeedChange}
           />
-        </SliderWrapper>
+        </Section>
       </Row>
-      {/* <Controls
-        toggleRunning={toggleRunning}
-        randomiseGrid={randomiseGrid}
-        clearGrid={clearGrid}
-      /> */}
       <Row>Generation #{generationCount}</Row>
       <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />

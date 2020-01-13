@@ -4,9 +4,9 @@ const Row = styled.div`
   padding-top: ${props => (props.pt ? `${props.pt}px` : undefined)};
   padding-bottom: ${props => (props.pb ? `${props.pb}px` : undefined)};
   display: flex;
-  flex-direction: row;
+  flex-direction: ${props => (props.isSmallScreen ? "column" : "row")};
   align-content: center;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 const Button = styled.button`
@@ -42,7 +42,7 @@ const Slider = styled.input`
   appearance: none;
   width: 200px;
   height: 5px;
-  margin-top: 5px;
+  margin-top: 20px;
   border-radius: 2px;
   margin-left: 5px;
   margin-right: 5px;
