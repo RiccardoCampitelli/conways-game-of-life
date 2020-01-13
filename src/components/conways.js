@@ -1,14 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 
 import styled from "styled-components";
 
 import Grid from "./grid";
-import GameDescription from "./gameDescription";
+import GameDescription from "#root/components/gameDescription";
 
 import produce from "immer";
-import useInterval from "../hooks/useInterval";
+import useInterval from "#root/hooks/useInterval";
 
 import { FaPlus, FaMinus } from "react-icons/fa";
+import Controls from "#root/components/controls";
+import {
+  Slider,
+  Section,
+  Button
+} from "#root/components/common/styledComponents";
 
 const Container = styled.div`
   background-color: #f5f5f5;
@@ -23,64 +29,6 @@ const Row = styled.div`
   flex-direction: row;
   align-content: center;
   justify-content: center;
-`;
-
-const Button = styled.button`
-  margin-left: 10px;
-  margin-right: 10px;
-  border-radius: 15px;
-  padding: 10px 10px 10px 10px;
-  font-weight: bold;
-  font-size: 15px;
-  height: 40px;
-  border: 1px solid ${props => (props.color ? props.color : "#c66")};
-  color: #f5f5f5;
-  background-color: ${props => (props.color ? props.color : "#c66")};
-  cursor: pointer;
-
-  transition: all 0.3s ease-in-out;
-
-  :focus {
-    outline: 0;
-  }
-
-  :hover {
-    transform: scale(1.05);
-  }
-
-  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
-`;
-
-const Slider = styled.input`
-  -webkit-appearance: none;
-  appearance: none;
-  width: 200px;
-  height: 5px;
-  margin-top: 5px;
-  border-radius: 2px;
-  margin-left: 5px;
-  margin-right: 5px;
-  background: #5c5c5c;
-  outline: none;
-  opacity: 0.7;
-  -webkit-transition: 0.2s;
-  transition: opacity 0.2s;
-  cursor: pointer;
-
-  -webkit-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.25);
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 5px;
-    background: #c66;
-  }
 `;
 
 const PlusIcon = styled(FaPlus)`
@@ -107,6 +55,11 @@ const Header = styled.h1`
   font-family: "Pacifico", cursive;
   color: #f5f5f5;
   z-index: 5;
+`;
+
+const SliderWrapper = styled.div`
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
@@ -163,22 +116,23 @@ const countNeighbors = (grid, rowIndex, colIndex) => {
   return neighborCount;
 };
 
-
 //TODO: try https://github.com/react-component/slider for slider
+
+//TODO: Move common components out of here.
 const Conways = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
   const [tickSpeed, setTickSpeed] = useState(TICK_SPEED);
   const [running, setRunning] = useState(false);
   const [generationCount, setGenerationCount] = useState(0);
 
-  const tick = () => {
+  const tick = useCallback(() => {
     setGrid(oldGrid => {
       const newGrid = produce(oldGrid, gridClone => {
-        grid.forEach((row, rowIndex) =>
+        gridClone.forEach((row, rowIndex) =>
           row.forEach((_, colIndex) => {
-            const neighborCount = countNeighbors(grid, rowIndex, colIndex);
-
-            if (grid[rowIndex][colIndex] === 1) {
+            const neighborCount = countNeighbors(oldGrid, rowIndex, colIndex);
+           
+            if (gridClone[rowIndex][colIndex] === 1) {
               const shouldLive = neighborCount === 2 || neighborCount === 3;
 
               if (!shouldLive) gridClone[rowIndex][colIndex] = 0;
@@ -193,12 +147,12 @@ const Conways = () => {
 
       return newGrid;
     });
-    setGenerationCount(count => count + 1);
-  };
+    // setGenerationCount(count => count + 1);
+  }, []);
 
   const speed = MAX_TICK_SPEED - tickSpeed;
 
-  useInterval(tick, running ? speed : null);
+  useInterval(tick, running ? tickSpeed : null);
 
   const toggleRunning = () => {
     setRunning(running => !running);
@@ -234,28 +188,29 @@ const Conways = () => {
         <Header>Conways game of life</Header>
       </Row>
       <GameDescription />
-      <Row pt={20} pb={20}>
-        <Button color={running ? "#eb7575" : "#c66"} onClick={toggleRunning}>
-          {running ? "Stop" : "Start"}
-        </Button>
-        <Button onClick={randomiseGrid}>Randomise</Button>
-        <Button onClick={clearGrid}>Clear</Button>
+      <Row pt={15} pb={15}>
+        <Section mr="100px">
+          <Button onClick={toggleRunning}>{running ? "Stop" : "Start"}</Button>
+          <Button onClick={randomiseGrid}>Randomise</Button>
+          <Button onClick={clearGrid}>Clear</Button>
+        </Section>
+        <SliderWrapper>
+          Speed ({tickSpeed})ms
+          <Slider
+            value={tickSpeed}
+            type="range"
+            min="1"
+            max={MAX_TICK_SPEED}
+            onChange={handleSpeedChange}
+          />
+        </SliderWrapper>
       </Row>
-      <Row>Speed</Row>
-      <Row pt={20} pb={20}>
-        <MinusIcon />
-        <Slider
-          value={tickSpeed}
-          type="range"
-          min="1"
-          max={MAX_TICK_SPEED}
-          onChange={handleSpeedChange}
-        />
-        <PlusIcon />
-      </Row>
-      <Row>
-        Generation #{generationCount}
-      </Row>
+      {/* <Controls
+        toggleRunning={toggleRunning}
+        randomiseGrid={randomiseGrid}
+        clearGrid={clearGrid}
+      /> */}
+      <Row>Generation #{generationCount}</Row>
       <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />
       </Row>

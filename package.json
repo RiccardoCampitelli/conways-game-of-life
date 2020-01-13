@@ -19,5 +19,9 @@
     "react-dom": ">= 16.3.0",
     "react-icons": "^3.8.0",
     "styled-components": "^4.4.1"
+  },
+  "alias": {
+    "#root": "./src",
+    "#common": "./src/App/components/common"
   }
 }
