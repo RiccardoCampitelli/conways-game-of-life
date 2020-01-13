@@ -20,6 +20,8 @@ const GridContainer = styled.div`
   grid-row-gap: 0px;
   grid-column-gap: 0px;
 
+  overflow: auto;
+
   -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
   -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
   box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);

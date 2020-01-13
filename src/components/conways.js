@@ -147,10 +147,10 @@ const Conways = () => {
 
       return newGrid;
     });
-    // setGenerationCount(count => count + 1);
+    setGenerationCount(count => count + 1);
   }, []);
 
-  const speed = MAX_TICK_SPEED - tickSpeed;
+  // const speed = MAX_TICK_SPEED - tickSpeed;
 
   useInterval(tick, running ? tickSpeed : null);
 
