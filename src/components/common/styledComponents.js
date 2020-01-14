@@ -76,4 +76,17 @@ const Section = styled.div`
   margin-right: ${props => (props.mr ? props.mr : undefined)};
 `;
 
-export { Row, Section, Button, Slider };
+const StyledDiv = styled.div`
+  margin-left: 10px;
+  margin-right: 10px;
+  border-radius: 15px;
+  padding: 10px 10px 10px 10px;
+  font-weight: bold;
+  font-size: 15px;
+  height: 20px;
+  width: ${props => props.width ? `${props.width}px` : undefined };
+  background-color: #c66;
+  color: #f5f5f5;
+`;
+
+export { Row, Section, Button, Slider, StyledDiv };
