@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 
 import styled from "styled-components";
 
@@ -17,6 +17,8 @@ import {
   Row
 } from "#root/components/common/styledComponents";
 import useDimensions from "../hooks/useDimensions";
+
+import { useWorker } from "react-hooks-worker";
 
 const Container = styled.div`
   background-color: #f5f5f5;
@@ -81,7 +83,7 @@ const BOARD_WIDTH = 50;
 const LIFE_RATIO = 0.25;
 
 const TICK_SPEED = 250;
-const MAX_TICK_SPEED = 500;
+const MAX_TICK_SPEED = 1000;
 
 const generateEmptyGrid = () =>
   Array.from({ length: BOARD_WIDTH }, () =>
@@ -130,8 +132,25 @@ const countNeighbors = (grid, rowIndex, colIndex) => {
   return neighborCount;
 };
 
-//TODO: try https://github.com/react-component/slider for slider
+// const worker = new Worker('../worker/conwayWorker.js');
 
+// worker.postMessage({data : "hey"});
+
+// worker.onmessage = message => console.log(message.data)
+const createWorker = () => new Worker("../worker/conwayWorker.js");
+
+function createGridClone(grid) {
+  let newGrid = [];
+
+  for (let index = 0; index < grid.length; index++) {
+    newGrid[index] = [...grid[index]];
+  }
+
+  return newGrid;
+}
+
+//TODO: try https://github.com/react-component/slider for slider
+//TODO: add controls wrapper / container
 //TODO: Move common components out of here.
 const Conways = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
@@ -139,7 +158,19 @@ const Conways = () => {
   const [running, setRunning] = useState(false);
   const [generationCount, setGenerationCount] = useState(0);
 
+  const { result } = useWorker(createWorker, grid);
   const [ref, { width }] = useDimensions();
+
+  const gridRef = useRef();
+  gridRef.current = result;
+
+
+  const setNewGrid = useCallback(() => {
+    if (gridRef.current !== undefined) {
+      setGrid(gridRef.current.grid);
+      setGenerationCount(count => count + 1);
+    }
+  }, []);
 
   const isSmallScreen = Math.floor(width) < 750;
 
@@ -168,9 +199,7 @@ const Conways = () => {
     setGenerationCount(count => count + 1);
   }, []);
 
-  // const speed = MAX_TICK_SPEED - tickSpeed;
-
-  useInterval(tick, running ? tickSpeed : null);
+  useInterval(setNewGrid, running ? tickSpeed : null);
 
   const toggleRunning = () => {
     setRunning(running => !running);
@@ -187,19 +216,19 @@ const Conways = () => {
     setGenerationCount(0);
   };
 
-  const handleSpeedChange = event => {
+  const handleSpeedChange = useCallback(event => {
     event.persist();
     setTickSpeed(event.target.value);
-  };
+  },[]);
 
-  const flipCell = (rowIndex, colIndex) => {
+  const flipCell = useCallback((rowIndex, colIndex) => {
     setGrid(oldGrid => {
       return produce(oldGrid, gridCopy => {
         gridCopy[rowIndex][colIndex] = gridCopy[rowIndex][colIndex] ? 0 : 1;
       });
     });
-  };
-  console.log(isSmallScreen);
+  },[])
+
   return (
     <Container ref={ref}>
       <Row>
