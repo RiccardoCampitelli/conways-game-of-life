@@ -22,7 +22,6 @@ import { useWorker } from "react-hooks-worker";
 const Container = styled.div`
   background-color: #f5f5f5;
   height: 100%;
-  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,8 +50,9 @@ const BOARD_WIDTH = 50;
 
 const LIFE_RATIO = 0.2;
 
-const TICK_SPEED = 500;
-const MAX_TICK_SPEED = 750;
+const TICK_SPEED = 850;
+const MIN_TICK_SPEED = 250;
+const MAX_TICK_SPEED = 1450;
 
 const generateEmptyGrid = () =>
   Array.from({ length: BOARD_WIDTH }, () =>
@@ -119,6 +119,11 @@ const Conways = () => {
     });
   }, []);
 
+  const speedPercentage = Math.floor(
+    (1 -
+    (tickSpeed - MIN_TICK_SPEED) / (MAX_TICK_SPEED - MIN_TICK_SPEED)) * 100
+  )
+
   return (
     <Container ref={ref}>
       <Header>Conways game of life</Header>
@@ -132,11 +137,12 @@ const Conways = () => {
           <Button onClick={clearGrid}>Clear</Button>
         </Section>
         <Section>
-          <StyledDiv>Speed ({tickSpeed})ms</StyledDiv>
+          <StyledDiv>Speed {speedPercentage}%</StyledDiv>
           <Slider
             value={tickSpeed}
             type="range"
-            min="250"
+            step="50"
+            min={MIN_TICK_SPEED}
             max={MAX_TICK_SPEED}
             onChange={handleSpeedChange}
           />

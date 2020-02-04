@@ -2,25 +2,28 @@ import React from "react";
 
 import styled from "styled-components";
 
-const CELL_SIZE = "12px";
+const CELL_SIZE = "13px";
 
 const Cell = styled.div`
   height: ${CELL_SIZE};
   width: ${CELL_SIZE};
   background-color: ${props => (props.isAlive ? "#c66" : "inherit")};
   cursor: pointer;
-
-  border: 0.1px solid black;
+  outline: 1px solid #797878;
+  /* outline: ${props => props.isAlive ? "1px solid #c66" : "1px solid #797878"} */
+  /* border: 0.1px solid black; */
 `;
 
 const GridContainer = styled.div`
-  display: grid;
+  /* display: grid;
   grid-template-columns: repeat(50, auto);
   grid-template-rows: repeat(50, auto);
   grid-row-gap: 0px;
-  grid-column-gap: 0px;
-
-  overflow: auto;
+  grid-column-gap: 0px; */
+  display: flex;
+  flex-wrap: wrap;
+  width: 650px;
+  height: 650px;
 
   -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
   -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);

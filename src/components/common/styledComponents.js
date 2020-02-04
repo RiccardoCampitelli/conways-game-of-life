@@ -23,7 +23,7 @@ const Button = styled.button`
   background-color: ${props => (props.color ? props.color : "#c66")};
   cursor: pointer;
 
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
 
   :focus {
     outline: 0;
@@ -88,6 +88,7 @@ const StyledDiv = styled.div`
   width: ${props => props.width ? `${props.width}px` : undefined };
   background-color: #c66;
   color: #f5f5f5;
+  cursor: default;
 `;
 
 export { Row, Section, Button, Slider, StyledDiv };
