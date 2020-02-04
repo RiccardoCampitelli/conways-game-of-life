@@ -7,6 +7,7 @@ const Row = styled.div`
   flex-direction: ${props => (props.isSmallScreen ? "column" : "row")};
   align-content: center;
   justify-content: space-evenly;
+  max-width: 70%;
 `;
 
 const Button = styled.button`

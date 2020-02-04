@@ -13,7 +13,7 @@ import {
   Section,
   Button,
   Row,
-   StyledDiv
+  StyledDiv
 } from "#root/components/common/styledComponents";
 import useDimensions from "../hooks/useDimensions";
 
@@ -23,6 +23,9 @@ const Container = styled.div`
   background-color: #f5f5f5;
   height: 100%;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const Header = styled.h1`
@@ -43,17 +46,10 @@ const Header = styled.h1`
   z-index: 5;
 `;
 
-const SliderWrapper = styled.div`
-  margin-top: auto;
-  margin-bottom: auto;
-`;
-
-
-
 const BOARD_HEIGHT = 50;
 const BOARD_WIDTH = 50;
 
-const LIFE_RATIO = 0.20;
+const LIFE_RATIO = 0.2;
 
 const TICK_SPEED = 500;
 const MAX_TICK_SPEED = 750;
@@ -70,16 +66,12 @@ const generateRandomGrid = () =>
     )
   );
 
-// const worker = new Worker('../worker/conwayWorker.js');
-
-// worker.postMessage({data : "hey"});
-
-// worker.onmessage = message => console.log(message.data)
 const createWorker = () => new Worker("../worker/conwayWorker.js");
 
 //TODO: try https://github.com/react-component/slider for slider
 //TODO: add controls wrapper / container
 //TODO: Move common components out of here.
+
 const Conways = () => {
   const [grid, setGrid] = useState(generateRandomGrid());
   const [tickSpeed, setTickSpeed] = useState(TICK_SPEED);
@@ -129,11 +121,10 @@ const Conways = () => {
 
   return (
     <Container ref={ref}>
-      <Row>
-        <Header>Conways game of life</Header>
-      </Row>
+      <Header>Conways game of life</Header>
+
       <GameDescription />
-     
+
       <Row pt={15} pb={15} isSmallScreen={isSmallScreen}>
         <Section>
           <Button onClick={toggleRunning}>{running ? "Stop" : "Start"}</Button>
@@ -154,8 +145,6 @@ const Conways = () => {
       <Row pt={20} pb={20}>
         <Grid grid={grid} flipCell={flipCell} />
       </Row>
-
-
     </Container>
   );
 };

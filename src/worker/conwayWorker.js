@@ -12,8 +12,6 @@ const options = [
 ];
 const BOARD_WIDTH = 50;
 
-
-
 exposeWorker(calculateNewGrid);
 
 function createGridClone(grid) {

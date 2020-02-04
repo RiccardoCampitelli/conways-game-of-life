@@ -12,6 +12,16 @@ const InfoSpan = styled.span`
   cursor: pointer;
 `;
 
+const Paragraph = styled.p`
+  width: 100%;
+  text-align: center;
+  padding-top: 20px;
+`;
+
+const Li = styled.li`
+  list-style-type: none;
+  text-align: center;
+`;
 
 const transitions = ["height", "opacity"];
 
@@ -30,27 +40,24 @@ const GameDescription = () => {
         </StyledDiv>
       </Row>
       <Expand open={open} transitions={transitions} duration={200}>
-        <Row pt={20}>
+        <Paragraph>
           The Game of Life, also known simply as Life, is a cellular automaton
           devised by the British mathematician John Horton Conway in 1970.
-        </Row>
+        </Paragraph>
 
-        <Row pt={20}>
+        <Paragraph>
           These rules, which compare the behavior of the automaton to real life,
           can be condensed into the following:
-        </Row>
-        <Row pt={20}>
-          <ol>
-            <li>any live cell with two or three neighbors survives.</li>
-            <li>
-              Any dead cell with three live neighbors becomes a live cell.
-            </li>
-            <li>
-              All other live cells die in the next generation. Similarly, all
-              other dead cells stay dead.
-            </li>
-          </ol>
-        </Row>
+        </Paragraph>
+
+        <ol>
+          <Li>any live cell with two or three neighbors survives.</Li>
+          <Li>Any dead cell with three live neighbors becomes a live cell.</Li>
+          <Li>
+            All other live cells die in the next generation. Similarly, all
+            other dead cells stay dead.
+          </Li>
+        </ol>
       </Expand>
     </>
   );
