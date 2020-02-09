@@ -2,19 +2,19 @@ import React, { useState } from "react";
 
 import styled, { keyframes } from "styled-components";
 
-import Expand from "react-expand-animated";
-
 import { Row, StyledDiv } from "#root/components/common/styledComponents";
 
-const enterAnimation = keyframes`
+const fadeInAnimation = keyframes`
 from { 
   opacity: 0;
+  transform: translateY(-10px)
 }
 
 to { 
   opacity: 1;
-}
+  transform: translateY(0px)
 
+}
 `;
 
 const DescriptionWrapper = styled.div`
@@ -25,6 +25,8 @@ const DescriptionWrapper = styled.div`
   border-radius: 15px;
   padding: 10px;
   margin-top: 10px;
+
+  animation: ${fadeInAnimation} 300ms ease-in;
 
   -webkit-box-shadow: 2px 9px 11px 0px rgba(0, 0, 0, 0.09);
   -moz-box-shadow: 2px 9px 11px 0px rgba(0, 0, 0, 0.09);
@@ -68,7 +70,7 @@ const GameDescription = () => {
         </StyledDiv>
       </Row>
 
-      <Expand open={open} transitions={transitions} duration={400}>
+      {open && (
         <DescriptionWrapper>
           <Paragraph>
             The Game of Life, also known simply as Life, is a cellular automaton
@@ -91,7 +93,7 @@ const GameDescription = () => {
             </Li>
           </ol>
         </DescriptionWrapper>
-      </Expand>
+      )}
     </>
   );
 };
