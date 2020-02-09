@@ -10,7 +10,7 @@ const options = [
   [1, 0],
   [1, 1]
 ];
-const BOARD_WIDTH = 50;
+const BOARD_WIDTH = 40;
 
 exposeWorker(calculateNewGrid);
 

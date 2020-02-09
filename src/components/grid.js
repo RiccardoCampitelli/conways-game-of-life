@@ -22,8 +22,8 @@ const GridContainer = styled.div`
   grid-column-gap: 0px; */
   display: flex;
   flex-wrap: wrap;
-  width: 650px;
-  height: 650px;
+  width: 520px;
+  height: 520px;
 
   -webkit-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);
   -moz-box-shadow: 0px 0px 20px 5px rgba(0, 0, 0, 0.48);

@@ -45,8 +45,8 @@ const Header = styled.h1`
   z-index: 5;
 `;
 
-const BOARD_HEIGHT = 50;
-const BOARD_WIDTH = 50;
+const BOARD_HEIGHT = 40;
+const BOARD_WIDTH = 40;
 
 const LIFE_RATIO = 0.2;
 
@@ -71,6 +71,7 @@ const createWorker = () => new Worker("../worker/conwayWorker.js");
 //TODO: try https://github.com/react-component/slider for slider
 //TODO: add controls wrapper / container
 //TODO: Move common components out of here.
+//TODO: Reduce grid size. (maybe 40 x 40)
 
 const Simulator = ({ isSmallScreen }) => {
   const [grid, setGrid] = useState(generateRandomGrid());
