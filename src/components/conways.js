@@ -26,11 +26,11 @@ const Header = styled.h1`
 `;
 
 const Container = styled.div`
-  background-color: #f5f5f5;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: auto;
   background: rgb(2, 0, 36);
   background: linear-gradient(
     145deg,

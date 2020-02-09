@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 
 import { Row, StyledDiv, Button } from "#root/components/common/styledComponents";
 
-const fadeInAnimation = keyframes`
+const enterAnimation = keyframes`
 from { 
   opacity: 0;
   transform: translateY(-10px)
@@ -25,7 +25,7 @@ const DescriptionWrapper = styled.div`
   padding: 10px;
   margin-top: 10px;
 
-  animation: ${fadeInAnimation} 300ms ease-in;
+  animation: ${enterAnimation} 300ms ease-in;
 
   -webkit-box-shadow: 2px 9px 11px 0px rgba(0, 0, 0, 0.09);
   -moz-box-shadow: 2px 9px 11px 0px rgba(0, 0, 0, 0.09);
