@@ -12,7 +12,7 @@
   },
   "scripts": {
     "watch": "parcel src/index.html",
-    "build": "parcel build src/index.html"
+    "build": "parcel build dist/index.html"
   },
   "dependencies": {
     "immer": "^5.2.1",
