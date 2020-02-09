@@ -33,13 +33,22 @@ const Container = styled.div`
   align-items: center;
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+`;
+
 const Conways = () => {
   const [ref, { width }] = useDimensions();
   const isSmallScreen = Math.floor(width) < 750;
 
   return (
     <Container ref={ref}>
-      <Header>Conways game of life</Header>
+      <HeaderWrapper>
+        <Header>Conways game of life</Header>
+      </HeaderWrapper>
 
       <GameDescription />
       <Simulator isSmallScreen={isSmallScreen} />

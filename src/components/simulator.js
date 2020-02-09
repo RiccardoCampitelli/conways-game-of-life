@@ -1,9 +1,6 @@
 import React, { useState, useCallback, useRef } from "react";
 
-// import styled from "styled-components";
-
 import Grid from "./grid";
-// import GameDescription from "#root/components/gameDescription";
 
 import produce from "immer";
 import useInterval from "#root/hooks/useInterval";
@@ -42,9 +39,6 @@ const generateRandomGrid = () =>
 const createWorker = () => new Worker("../worker/conwayWorker.js");
 
 //TODO: try https://github.com/react-component/slider for slider
-//TODO: add controls wrapper / container
-//TODO: Move common components out of here.
-//TODO: Reduce grid size. (maybe 40 x 40)
 
 const Simulator = ({ isSmallScreen }) => {
   const [grid, setGrid] = useState(generateRandomGrid());
