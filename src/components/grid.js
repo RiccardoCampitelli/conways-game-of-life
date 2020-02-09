@@ -7,7 +7,7 @@ const CELL_SIZE = "13px";
 const Cell = styled.div`
   height: ${CELL_SIZE};
   width: ${CELL_SIZE};
-  background-color: ${props => (props.isAlive ? "#c66" : "inherit")};
+  background-color: ${props => (props.isAlive ? "#c66" : "#f7e4ca")};
   cursor: pointer;
   outline: 1px solid #797878;
 `;

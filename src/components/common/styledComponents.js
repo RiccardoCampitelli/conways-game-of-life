@@ -19,9 +19,10 @@ const Button = styled.button`
   font-size: 15px;
   height: 40px;
   border: 1px solid ${props => (props.color ? props.color : "#c66")};
-  color: #f5f5f5;
+  color: #f7e4ca;
   background-color: ${props => (props.color ? props.color : "#c66")};
   cursor: pointer;
+  letter-spacing: 1px;
 
   transition: all 0.2s ease-in-out;
 
@@ -87,7 +88,7 @@ const StyledDiv = styled.div`
   height: 20px;
   width: ${props => props.width ? `${props.width}px` : undefined };
   background-color: #c66;
-  color: #f5f5f5;
+  color: #f7e4ca;
   cursor: default;
 `;
 

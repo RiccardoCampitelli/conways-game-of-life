@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import styled, { keyframes } from "styled-components";
 
-import { Row, StyledDiv } from "#root/components/common/styledComponents";
+import { Row, StyledDiv, Button } from "#root/components/common/styledComponents";
 
 const fadeInAnimation = keyframes`
 from { 
@@ -13,7 +13,6 @@ from {
 to { 
   opacity: 1;
   transform: translateY(0px)
-
 }
 `;
 
@@ -21,7 +20,7 @@ const DescriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #d4d3d3;
+  background-color: #cc666675;
   border-radius: 15px;
   padding: 10px;
   margin-top: 10px;
@@ -37,6 +36,7 @@ const InfoSpan = styled.span`
   font-weight: bold;
   font-size: 18px;
   cursor: pointer;
+  color: #f7e4ca;
   font-family: "Cambay", sans-serif;
 `;
 
@@ -44,6 +44,7 @@ const Paragraph = styled.p`
   width: 100%;
   text-align: center;
   padding-top: 20px;
+  /* color: #f7e4ca; */
   font-family: "Cambay", sans-serif;
 `;
 
@@ -52,8 +53,6 @@ const Li = styled.li`
   text-align: center;
   font-family: "Cambay", sans-serif;
 `;
-
-const transitions = ["height", "opacity"];
 
 const GameDescription = () => {
   const [open, setOpen] = useState(false);
@@ -65,9 +64,9 @@ const GameDescription = () => {
   return (
     <>
       <Row>
-        <StyledDiv onClick={handleClick} width={50}>
+        <Button onClick={handleClick} width={50}>
           <InfoSpan>Info {open ? "-" : "+"}</InfoSpan>
-        </StyledDiv>
+        </Button>
       </Row>
 
       {open && (

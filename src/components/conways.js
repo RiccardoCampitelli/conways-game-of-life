@@ -21,7 +21,7 @@ const Header = styled.h1`
   margin-top: 20px;
   margin-bottom: 20px;
   font-family: "Pacifico", cursive;
-  color: #f5f5f5;
+  color: #f7e4ca;
   z-index: 5;
 `;
 
@@ -31,6 +31,13 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    145deg,
+    rgba(2, 0, 36, 1) 0%,
+    rgba(255, 237, 208, 1) 0%,
+    rgba(255, 178, 106, 1) 100%
+  );
 `;
 
 const HeaderWrapper = styled.div`
