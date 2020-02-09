@@ -17,6 +17,7 @@ const Button = styled.button`
   padding: 10px 10px 10px 10px;
   font-weight: bold;
   font-size: 15px;
+  font-family: "Cambay", sans-serif;
   height: 40px;
   border: 1px solid ${props => (props.color ? props.color : "#c66")};
   color: #f7e4ca;
@@ -85,6 +86,7 @@ const StyledDiv = styled.div`
   padding: 10px 10px 10px 10px;
   font-weight: bold;
   font-size: 15px;
+  font-family: "Cambay", sans-serif;
   height: 20px;
   width: ${props => props.width ? `${props.width}px` : undefined };
   background-color: #c66;

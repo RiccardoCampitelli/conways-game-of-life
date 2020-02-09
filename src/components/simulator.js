@@ -21,8 +21,9 @@ const BOARD_WIDTH = 40;
 const LIFE_RATIO = 0.2;
 
 const TICK_SPEED = 850;
-const MIN_TICK_SPEED = 250;
-const MAX_TICK_SPEED = 1450;
+const MIN_TICK_SPEED = 250; //1200 - 1450
+const MAX_TICK_SPEED = 1450; //-1200 - 1450
+const TICK_SPEED_RANGE = MAX_TICK_SPEED - MIN_TICK_SPEED;
 
 const generateEmptyGrid = () =>
   Array.from({ length: BOARD_WIDTH }, () =>
@@ -42,7 +43,7 @@ const createWorker = () => new Worker("../worker/conwayWorker.js");
 
 const Simulator = ({ isSmallScreen }) => {
   const [grid, setGrid] = useState(generateRandomGrid());
-  const [tickSpeed, setTickSpeed] = useState(TICK_SPEED);
+  const [tickSpeedForSlider, setTickSpeedForSlider] = useState(TICK_SPEED);
   const [running, setRunning] = useState(false);
 
   const { result } = useWorker(createWorker, grid);
@@ -55,6 +56,8 @@ const Simulator = ({ isSmallScreen }) => {
       setGrid(gridRef.current.grid);
     }
   }, []);
+
+  const tickSpeed = Math.abs(tickSpeedForSlider - TICK_SPEED_RANGE);
 
   useInterval(setNewGrid, running ? tickSpeed : null);
 
@@ -73,8 +76,12 @@ const Simulator = ({ isSmallScreen }) => {
 
   const handleSpeedChange = useCallback(event => {
     event.persist();
-    setTickSpeed(event.target.value);
+    setTickSpeedForSlider(event.target.value);
   }, []);
+
+  const tickSpeedPercentage = Math.floor(
+    ((tickSpeedForSlider - MIN_TICK_SPEED) / TICK_SPEED_RANGE) * 100
+  );
 
   const flipCell = useCallback((rowIndex, colIndex) => {
     setGrid(oldGrid => {
@@ -83,10 +90,6 @@ const Simulator = ({ isSmallScreen }) => {
       });
     });
   }, []);
-
-  const speedPercentage = Math.floor(
-    (1 - (tickSpeed - MIN_TICK_SPEED) / (MAX_TICK_SPEED - MIN_TICK_SPEED)) * 100
-  );
 
   return (
     <>
@@ -97,9 +100,9 @@ const Simulator = ({ isSmallScreen }) => {
           <Button onClick={clearGrid}>Clear</Button>
         </Section>
         <Section>
-          <StyledDiv>Speed {speedPercentage}%</StyledDiv>
+          <StyledDiv>Speed {tickSpeedPercentage}%</StyledDiv>
           <Slider
-            value={tickSpeed}
+            value={tickSpeedForSlider}
             type="range"
             step="50"
             min={MIN_TICK_SPEED}
