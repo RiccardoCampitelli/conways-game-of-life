@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useRef } from "react";
 
-import styled from "styled-components";
+// import styled from "styled-components";
 
 import Grid from "./grid";
-import GameDescription from "#root/components/gameDescription";
+// import GameDescription from "#root/components/gameDescription";
 
 import produce from "immer";
 import useInterval from "#root/hooks/useInterval";
@@ -15,35 +15,8 @@ import {
   Row,
   StyledDiv
 } from "#root/components/common/styledComponents";
-import useDimensions from "../hooks/useDimensions";
 
 import { useWorker } from "react-hooks-worker";
-
-const Container = styled.div`
-  background-color: #f5f5f5;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Header = styled.h1`
-  margin: 0;
-
-  background-color: #c66;
-  border-radius: 15px;
-  width: 80%;
-  height: 100px;
-  line-height: 80px;
-  font-size: 60px;
-  text-align: center;
-  position: relative;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  font-family: "Pacifico", cursive;
-  color: #f5f5f5;
-  z-index: 5;
-`;
 
 const BOARD_HEIGHT = 40;
 const BOARD_WIDTH = 40;

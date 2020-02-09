@@ -10,16 +10,9 @@ const Cell = styled.div`
   background-color: ${props => (props.isAlive ? "#c66" : "inherit")};
   cursor: pointer;
   outline: 1px solid #797878;
-  /* outline: ${props => props.isAlive ? "1px solid #c66" : "1px solid #797878"} */
-  /* border: 0.1px solid black; */
 `;
 
 const GridContainer = styled.div`
-  /* display: grid;
-  grid-template-columns: repeat(50, auto);
-  grid-template-rows: repeat(50, auto);
-  grid-row-gap: 0px;
-  grid-column-gap: 0px; */
   display: flex;
   flex-wrap: wrap;
   width: 520px;
